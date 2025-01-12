@@ -1,0 +1,39 @@
+.mat-mdc-button-base {
+  margin: 4px;
+}
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.info-item span {
+  font-size: 14px;
+  color: gray;
+}
+
+.info-item strong {
+  font-size: 16px;
+  color: black;
+}
+
+.progress-container {
+  margin-top: 16px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 14px;
+  color: gray;
+}
+.demo-chart {
+  height: 400px;
+}
