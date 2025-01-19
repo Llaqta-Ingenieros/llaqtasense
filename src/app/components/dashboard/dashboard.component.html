@@ -65,8 +65,30 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>Tensión Molino MLB-03</mat-card-title>
+        <mat-button-toggle-group
+        class="time-range-selector"
+        [value]="selectedRange"
+        (change)="onTimeRangeChange($event)"
+        aria-label="Time range selector"
+        [disabled]="isLoading"
+      >
+        <mat-button-toggle value="default">Default</mat-button-toggle>
+        <mat-button-toggle value="1H">1H</mat-button-toggle>
+        <mat-button-toggle value="1D">1D</mat-button-toggle>
+        <mat-button-toggle value="1W">1W</mat-button-toggle>
+        <mat-button-toggle value="1M">1M</mat-button-toggle>
+        <mat-button-toggle value="CUSTOM" (click)="openDatePicker()">Personalizado</mat-button-toggle>
+        <mat-date-range-input [rangePicker]="picker" style="width: 1px;">
+          <input matStartDate />
+          <input matEndDate (dateChange)="onDateRangeSelected($event)"/>
+        </mat-date-range-input>
+        <mat-date-range-picker #picker>
+        </mat-date-range-picker>
+      </mat-button-toggle-group>
       </mat-card-header>
       <mat-card-content>
+
+
         <div echarts [options]="chartOption" class="demo-chart" (chartInit)="onChartInit($event)"></div>
       </mat-card-content>
     </mat-card>

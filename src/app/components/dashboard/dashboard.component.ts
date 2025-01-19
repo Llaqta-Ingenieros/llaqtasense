@@ -1,15 +1,22 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  inject,
   NgZone,
   OnDestroy,
   OnInit,
-  inject,
+  signal,
+  ViewChild
 } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER, MatDatepickerModule, MatDateRangePicker } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -74,6 +81,14 @@ const series = seriesNames.map((name) => ({
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DashboardService,
     provideEchartsCore({ echarts }),
+    MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER, // Asegura la correcta estrategia de scroll
+    {
+      provide: MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
+      useValue: {
+        hasBackdrop: true,
+        positionStrategy: 'below', // Posiciona siempre debajo
+      }
+    }
   ],
   standalone: true,
   imports: [
@@ -88,13 +103,20 @@ const series = seriesNames.map((name) => ({
     MtxProgressModule,
     BreadcrumbComponent,
     MatProgressBarModule,
-    NgxEchartsDirective
+    MatButtonToggleModule,
+    NgxEchartsDirective,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly ngZone = inject(NgZone);
   private readonly settings = inject(SettingsService);
   private readonly dashboardSrv = inject(DashboardService);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly fb = inject(FormBuilder);
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = this.dashboardSrv.getData();
@@ -104,12 +126,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   charts = this.dashboardSrv.getCharts();
   chart1?: ApexCharts;
   chart2?: ApexCharts;
+  selectedRange: string = 'default';
+  @ViewChild('picker') datePicker!: MatDateRangePicker<any>;
 
   stats = this.dashboardSrv.getStats();
 
   notifySubscription = Subscription.EMPTY;
   echartsInstance!: any;
-
+  isLoading = false;
 
   chartOption: EChartsCoreOption = {
     tooltip: {
@@ -134,10 +158,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     series: series
   };
 
+  range: FormGroup = this.fb.group({
+    start: [null], // Fecha de inicio
+    end: [null]
+  });
+  events = signal<string[]>([]);
+
   ngOnInit() {
     this.notifySubscription = this.settings.notify.subscribe(opts => {
-      console.log(opts);
-
       this.updateCharts(opts);
     });
   }
@@ -158,7 +186,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.chart1?.render();
     // this.chart2 = new ApexCharts(document.querySelector('#chart2'), this.charts[1]);
     // this.chart2?.render();
-    console.log(this.settings.options);
     this.onChartInit(this.echartsInstance);
     //this.updateCharts(this.settings.options);
   }
@@ -169,7 +196,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     //const theme = opts.theme === 'dark' ? 'dark' : null; // 'dark' para modo oscuro, null para tema claro
 
     if (this.echartsInstance) {
-      console.log('update chart theme:', opts.theme);
       this.echartsInstance.dispose();
       this.echartsInstance = init(document.querySelector('.demo-chart') as HTMLElement, opts.theme);
       this.echartsInstance.setOption({
@@ -181,7 +207,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   onChartInit(ec: any) {
-    console.log('on chart init:', ec);
     this.echartsInstance = ec;
     // this.updateChartTheme('dark');
   }
@@ -196,6 +221,38 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   resizeChart() {
     if (this.echartsInstance) {
       this.echartsInstance.resize();
+    }
+  }
+
+  onTimeRangeChange(event: any): void {
+    const range = event.value;
+    this.selectedRange = range;
+    if (range === 'CUSTOM') {
+      this.openDatePicker();
+    } else {
+      this.loadChartData(range);
+    }
+  }
+
+  loadChartData(range: string): void {
+    this.isLoading = true;
+    this.echartsInstance.showLoading('default', { text: 'Cargando...' });
+    setTimeout(() => {
+      this.echartsInstance.hideLoading();
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    }
+      , 2000);
+  }
+
+  openDatePicker(): void {
+    if (this.datePicker) {
+      this.datePicker.open();
+    }
+  }
+  onDateRangeSelected(event: any): void {
+    if (event.value) {
+      this.loadChartData('CUSTOM');
     }
   }
 }

@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 .mat-mdc-button-base {
   margin: 4px;
 }
@@ -36,4 +37,23 @@
 }
 .demo-chart {
   height: 400px;
+}
+
+mat-button-toggle-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+.time-range-selector {
+  @include mat.button-toggle-overrides((
+    height: 25px,
+    //legacy-height: 20px,
+  ));
+}
+
+.mat-mdc-card-header {
+  justify-content: space-between;
 }
