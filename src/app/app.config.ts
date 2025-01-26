@@ -1,12 +1,11 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
-
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_CARD_CONFIG } from '@angular/material/card';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter, withComponentInputBinding, withHashLocation, withInMemoryScrolling } from '@angular/router';
 import { appInitializerProviders, BASE_URL, httpInterceptorProviders } from '@core';
 import { environment } from '@env/environment';
 import { provideMomentDatetimeAdapter } from '@ng-matero/extensions-moment-adapter';
@@ -30,7 +29,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes,
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
-      withComponentInputBinding()),
+      withComponentInputBinding(),
+      withHashLocation(),),
     provideAnimationsAsync(),
     provideToastr(),
     provideHttpClient(withInterceptorsFromDi()),

@@ -18,7 +18,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/llaqta",
+            "outputPath": "dist/llaqtav2",
+            "baseHref": "/llaqtav2/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "allowedCommonJsDependencies": [
@@ -57,7 +58,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/llaqta/"
+              "baseHref": "/llaqtav2/"
             },
             "development": {
               "optimization": false,

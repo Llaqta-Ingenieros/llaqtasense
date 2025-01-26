@@ -35,11 +35,11 @@ import { DashboardService } from './dashboard.service';
 import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
 // import echarts core
 import { LineChart } from 'echarts/charts';
-import { GridComponent, LegendComponent, ToolboxComponent, TooltipComponent } from 'echarts/components';
+import { GridComponent, LegendComponent, MarkAreaComponent, MarkLineComponent, ToolboxComponent, TooltipComponent } from 'echarts/components';
 import * as echarts from 'echarts/core';
 import { EChartsCoreOption } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
-echarts.use([ToolboxComponent, LegendComponent, TooltipComponent, GridComponent, CanvasRenderer, LineChart]);
+echarts.use([ToolboxComponent, LegendComponent, TooltipComponent, GridComponent, CanvasRenderer, LineChart, MarkLineComponent, MarkAreaComponent]);
 const data: DataItem[] = [
   { fecha: '26/09/24', S01: 180000, S02: 170000, S03: 160000, S04: 150000, S05: 140000 },
   { fecha: '27/09/24', S01: 179500, S02: 169800, S03: 159900, S04: 149900, S05: 139800 },
@@ -72,7 +72,35 @@ type DataItem = {
 const series = seriesNames.map((name) => ({
   name,
   type: 'line',
-  data: data.map((item) => item[name]), // Extraer valores de cada serie
+  data: data.map((item) => item[name]),
+  ...(name === 'S05' && {
+    markLine: {
+      data: [
+        { yAxis: 160000, name: 'Umbral Superior' },
+        { yAxis: 140000, name: 'Umbral Inferior' },
+      ],
+      lineStyle: {
+        type: 'dashed',
+        color: 'green',
+        width: 2,
+      },
+      label: {
+        formatter: '{b}',
+        position: 'end',
+      },
+    },
+    markArea: {
+      data: [
+        [
+          { yAxis: 160000 },
+          { yAxis: 140000 },
+        ],
+      ],
+      itemStyle: {
+        color: 'rgba(0, 255, 0, 0.1)', // Color semitransparente para el área
+      },
+    },
+  }),
 }));
 @Component({
   selector: 'app-dashboard',
@@ -225,6 +253,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onTimeRangeChange(event: any): void {
+    console.log(this.chartOption);
     const range = event.value;
     this.selectedRange = range;
     if (range === 'CUSTOM') {
