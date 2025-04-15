@@ -1,2 +1,0 @@
-# llaqtasense
-Front End LlaqtaSense
