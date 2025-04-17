@@ -26,7 +26,7 @@ jobs:
       - name: npm install, build, and test
         run: |  #npm run test --if-present
           npm install
-          npm run build -- --configuration production --output-path docs/browser --base-href /
+          npm run build:prod
 
 
       - name: Zip artifact for deployment
