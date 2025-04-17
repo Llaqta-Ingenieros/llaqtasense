@@ -18,8 +18,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/llaqtav2",
-            "baseHref": "/llaqtav2/",
+            "outputPath": "dist",
+            "baseHref": "/",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "allowedCommonJsDependencies": [
