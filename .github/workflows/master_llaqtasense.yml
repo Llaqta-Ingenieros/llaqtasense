@@ -31,8 +31,8 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
-          cd docs/browser
-          zip -r ../../release.zip ./*
+          cd dist
+          zip -r ../release.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
