@@ -6,6 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { debounceTime, tap } from 'rxjs';
 
+import { MsalService } from '@azure/msal-angular';
 import { AuthService, SettingsService, User } from '@core';
 
 @Component({
@@ -49,6 +50,7 @@ export class UserComponent implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly settings = inject(SettingsService);
+  private readonly msalService = inject(MsalService);
 
   user!: User;
 
@@ -62,10 +64,14 @@ export class UserComponent implements OnInit {
       .subscribe(() => this.cdr.detectChanges());
   }
 
-  logout() {
-    this.auth.logout().subscribe(() => {
-      this.router.navigateByUrl('/auth/login');
-    });
+  logout(popup?: boolean) {
+    if (popup) {
+      this.msalService.logoutPopup({
+        mainWindowRedirectUri: '/',
+      });
+    } else {
+      this.msalService.logoutRedirect();
+    }
   }
 
   restore() {
