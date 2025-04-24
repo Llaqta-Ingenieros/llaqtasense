@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@a
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 
 export enum STATUS {
   UNAUTHORIZED = 401,
@@ -31,21 +31,22 @@ export class ErrorInterceptor implements HttpInterceptor {
   };
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler) {
-    return next.handle(req).pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
+    //return next.handle(req).pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
+    return next.handle(req)
   }
 
   private handleError(error: HttpErrorResponse) {
-    if (this.errorPages.includes(error.status)) {
-      this.router.navigateByUrl(`/${error.status}`, {
-        skipLocationChange: true,
-      });
-    } else {
-      console.error('ERROR', error);
-      this.toast.error(this.getMessage(error));
-      if (error.status === STATUS.UNAUTHORIZED) {
-        this.router.navigateByUrl('/auth/login');
-      }
-    }
+    // if (this.errorPages.includes(error.status)) {
+    //   this.router.navigateByUrl(`/${error.status}`, {
+    //     skipLocationChange: true,
+    //   });
+    // } else {
+    //   console.error('ERROR', error);
+    //   this.toast.error(this.getMessage(error));
+    //   if (error.status === STATUS.UNAUTHORIZED) {
+    //     this.router.navigateByUrl('/auth/login');
+    //   }
+    // }
 
     return throwError(() => error);
   }

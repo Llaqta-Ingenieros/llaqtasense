@@ -145,6 +145,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly dashboardSrv = inject(DashboardService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly fb = inject(FormBuilder);
+  //private readonly msalServ = inject(MsalService);
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = this.dashboardSrv.getData();
@@ -196,6 +197,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.notifySubscription = this.settings.notify.subscribe(opts => {
       this.updateCharts(opts);
     });
+    // const user = this.msalServ.instance.getActiveAccount();
+    // if (user) {
+    //   console.log('Usuario autenticado:', user);
+    // } else {
+    //   console.log('No hay usuario autenticado');
+    // }
   }
 
   ngAfterViewInit() {

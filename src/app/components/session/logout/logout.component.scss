@@ -1,0 +1,28 @@
+.logout-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 64px); // resta el height del toolbar
+  background-color: #f4f6f9;
+  padding: 16px;
+}
+
+.logout-card {
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+
+  mat-card-title {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  mat-card-content p {
+    margin: 8px 0;
+  }
+  mat-card-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+}

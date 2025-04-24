@@ -22,6 +22,8 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "@azure/msal-angular": "^4.0.10",
+    "@azure/msal-browser": "^4.11.0",
     "@ng-matero/extensions": "^19.0.1",
     "@ng-matero/extensions-moment-adapter": "^19.0.0",
     "@ngx-formly/core": "^6.3.12",

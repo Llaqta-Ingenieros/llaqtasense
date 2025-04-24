@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <span class="title">LLAQTA</span>
+</mat-toolbar>
+
+<div class="logout-container">
+  <mat-card class="logout-card">
+    <mat-card-header>
+      <mat-card-title>Sesión finalizada</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Has cerrado sesión correctamente.</p>
+      <p>Si deseas volver a acceder, haz clic en el botón.</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="loginRedirect()">Iniciar sesión</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -4,16 +4,19 @@ export * from './error.interceptor';
 export * from './logging.interceptor';
 export * from './noop.interceptor';
 export * from './settings.interceptor';
-export * from './token.interceptor';
+//export * from './token.interceptor';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ApiInterceptor } from './api-interceptor';
+//import { ApiInterceptor } from './api-interceptor';
 import { BaseUrlInterceptor } from './base-url.interceptor';
+//import { ErrorInterceptor } from './error.interceptor';
+import { ApiInterceptor } from './api-interceptor';
 import { ErrorInterceptor } from './error.interceptor';
 import { LoggingInterceptor } from './logging.interceptor';
 import { NoopInterceptor } from './noop.interceptor';
 import { SettingsInterceptor } from './settings.interceptor';
 import { TokenInterceptor } from './token.interceptor';
+//import { TokenInterceptor } from './token.interceptor';
 
 /** Http interceptor providers in outside-in order */
 export const httpInterceptorProviders = [

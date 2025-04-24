@@ -11,6 +11,7 @@ import { MtxButtonModule } from '@ng-matero/extensions/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 
+import { MsalService } from '@azure/msal-angular';
 import { AuthService } from '@core/authentication';
 
 @Component({
@@ -35,6 +36,7 @@ export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthService);
+  private readonly msalService = inject(MsalService);
 
   isSubmitting = false;
 
@@ -79,5 +81,10 @@ export class LoginComponent {
           this.isSubmitting = false;
         },
       });
+  }
+  logout() {
+    this.msalService.logoutRedirect({
+      postLogoutRedirectUri: 'http://localhost:4200'
+    });
   }
 }
