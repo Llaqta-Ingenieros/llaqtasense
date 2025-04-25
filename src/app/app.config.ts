@@ -5,7 +5,7 @@ import { MAT_CARD_CONFIG } from '@angular/material/card';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter, withComponentInputBinding, withHashLocation, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withDisabledInitialNavigation, withEnabledBlockingInitialNavigation, withHashLocation, withInMemoryScrolling } from '@angular/router';
 import {
   MSAL_GUARD_CONFIG,
   MSAL_INSTANCE,
@@ -20,6 +20,7 @@ import {
 } from '@azure/msal-angular';
 import {
   BrowserCacheLocation,
+  BrowserUtils,
   InteractionType,
   IPublicClientApplication,
   LogLevel,
@@ -91,6 +92,11 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'i18n/', '.json');
 }
 
+const initialNavigationEnabled = (
+  (!BrowserUtils.isInIframe() && !BrowserUtils.isInPopup()) ||
+  window.location.href.includes('/logout')
+);
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -98,6 +104,7 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
       withComponentInputBinding(),
       withHashLocation(),
+      initialNavigationEnabled ? withEnabledBlockingInitialNavigation() : withDisabledInitialNavigation(),
     ),
     provideAnimationsAsync(),
     provideToastr(),

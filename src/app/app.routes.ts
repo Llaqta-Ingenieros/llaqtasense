@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MsalGuard, MsalRedirectComponent } from '@azure/msal-angular';
+import { AuthLayoutComponent } from '@components/auth-layout/auth-layout.component';
 import { DashboardComponent } from '@components/dashboard/dashboard.component';
 import { LayoutComponent } from '@components/layout/layout.component';
 import { LoginComponent } from '@components/session/login/login.component';
@@ -18,6 +19,14 @@ export const routes: Routes = [
         component: DashboardComponent
       },
     ],
+  },
+  {
+    path: 'code',
+    component: AuthLayoutComponent
+  },
+  {
+    path: 'error',
+    component: AuthLayoutComponent
   },
   {
     path: 'login-failed',
