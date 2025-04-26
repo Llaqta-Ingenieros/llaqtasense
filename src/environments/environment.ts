@@ -20,8 +20,8 @@ export const environment = {
     scopes: [
       'openid',
       'offline_access',
+      // 'https://graph.microsoft.com/User.Read'
       //'https://llaqtab2c.onmicrosoft.com/llaqtasense-api/data.read',
-
     ],
   }
 };
