@@ -10,8 +10,7 @@ import { DispositivoFormComponent } from './minas/zonas/campanas/dispositivos/di
 import { DispositivosListComponent } from './minas/zonas/campanas/dispositivos/dispositivos-list/dispositivos-list.component';
 import { ZonaFormComponent } from './minas/zonas/zona-form/zona-form.component';
 import { ZonasListComponent } from './minas/zonas/zonas-list/zonas-list.component';
-// El SensorFormComponent usualmente se abrirá en un diálogo, por lo que no necesita una ruta directa aquí,
-// a menos que decidas tener una vista dedicada para listar todos los sensores (lo cual es menos común).
+
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -58,6 +57,5 @@ export const ADMIN_ROUTES: Routes = [
       // Ejemplo: { path: 'usuarios', component: UsuariosListComponent, title: 'Gestión de Usuarios' },
     ],
   },
-  // Considera una ruta wildcard DENTRO de admin para manejar rutas no encontradas en esta sección
   { path: '**', redirectTo: 'dashboard' } // O a una página de error 404 específica de admin
 ];

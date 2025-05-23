@@ -1,1 +1,42 @@
-<p>sensor-form works!</p>
+<h2 mat-dialog-title>
+  {{ (data.sensor ? 'admin.sensores.form.titulo_editar' : 'admin.sensores.form.titulo_nuevo') | translate }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="sensorForm" class="sensor-form">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'admin.sensores.form.nombre' | translate }}</mat-label>
+      <input matInput formControlName="nombre" required>
+      <mat-error *ngIf="sensorForm.get('nombre')?.hasError('required')">
+        {{ 'common.validations.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'admin.sensores.form.coordenadas' | translate }}</mat-label>
+      <input matInput formControlName="coordenadas" placeholder="Ej: x34y54" required>
+       <mat-error *ngIf="sensorForm.get('coordenadas')?.hasError('required')">
+        {{ 'common.validations.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'admin.sensores.form.magnitud' | translate }}</mat-label>
+      <input matInput type="number" formControlName="magnitudPredeterminada" required>
+      <mat-error *ngIf="sensorForm.get('magnitudPredeterminada')?.hasError('required')">
+        {{ 'common.validations.required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="sensorForm.get('magnitudPredeterminada')?.hasError('min')">
+        {{ 'common.validations.min_value' | translate: { min: 0 } }}
+      </mat-error>
+    </mat-form-field>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">{{ 'common.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="guardarSensor()" [disabled]="sensorForm.invalid">
+    {{ (data.sensor ? 'common.save_changes' : 'common.add') | translate }}
+  </button>
+</mat-dialog-actions>

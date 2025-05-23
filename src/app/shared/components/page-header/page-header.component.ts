@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewEncapsulation,
   booleanAttribute,
   inject,
@@ -32,10 +34,17 @@ export class PageHeaderComponent implements OnInit {
   @Input() nav: string[] = [];
   @Input({ transform: booleanAttribute }) hideBreadcrumb = false;
 
+  @Input() hasBack = false;
+
+  @Output() backClick = new EventEmitter<void>();
+
   ngOnInit() {
     const routes = this.router.url.slice(1).split('/');
     const menuLevel = this.menu.getLevel(routes);
 
     this.title = this.title || menuLevel[menuLevel.length - 1];
+  }
+  onBackClick(): void {
+    this.backClick.emit();
   }
 }

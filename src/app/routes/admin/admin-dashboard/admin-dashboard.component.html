@@ -1,1 +1,27 @@
-<p>admin-dashboard works!</p>
+
+<page-header title="{{ 'admin.minas.titulo_lista' | translate }}" subtitle="{{ 'admin.minas.subtitulo_lista' | translate }}">
+  <button mat-raised-button color="primary" (click)="nuevaMina()">
+    <mat-icon>add</mat-icon>
+    {{ 'admin.minas.btn_nueva_mina' | translate }}
+  </button>
+</page-header>
+
+<mat-card class="m-t-24">
+  <mat-card-content>
+    <mtx-grid
+      [data]="minas"
+      [columns]="columns"
+      [loading]="isLoading"
+      [rowHover]="true"
+      [rowStriped]="true"
+      [columnResizable]="true"
+      [noResultText]="'common.no_results' | translate"
+      [pageOnFront]="true"
+      [showPaginator]="minas.length > 10"
+      [pageSizeOptions]="[10, 20, 50]"
+      [pageIndex]="0"
+      [pageSize]="10">
+    </mtx-grid>
+  </mat-card-content>
+</mat-card>
+

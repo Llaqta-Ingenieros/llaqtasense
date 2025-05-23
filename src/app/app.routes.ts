@@ -18,6 +18,11 @@ export const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent
       },
+      {
+        path: 'admin',
+        loadChildren: () => import('../app/routes/admin/admin.route').then(m => m.ADMIN_ROUTES),
+        data: { title: 'Administración', titleI18n: 'admin_section' }, // Para el menú o breadcrumbs
+      },
     ],
   },
   {
@@ -41,10 +46,6 @@ export const routes: Routes = [
     path: 'logout',
     component: LogoutComponent,
   },
-  {
-    path: 'admin',
-    loadChildren: () => import('../app/routes/admin/admin.route').then(m => m.ADMIN_ROUTES),
-    data: { title: 'Administración', titleI18n: 'admin_section' }, // Para el menú o breadcrumbs
-  },
+
   { path: '**', redirectTo: 'dashboard' },
 ];

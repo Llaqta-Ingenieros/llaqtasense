@@ -1,1 +1,106 @@
-<p>dispositivo-form works!</p>
+<page-header
+  title="{{ (isEditMode ? 'admin.dispositivos.form.titulo_editar' : 'admin.dispositivos.form.titulo_nuevo') | translate: {nombreDispositivo: dispositivo?.nombre || ''} }}"
+  subtitle="{{ 'admin.dispositivos.form.subtitulo' | translate: {nombreCampana: campana?.nombre || ''} }}"
+  [hasBack]="true"
+  (backClick)="volverAListaDispositivos()">
+</page-header>
+
+<div *ngIf="isLoading && !formPaso1Dispositivo.dirty" class="loading-shade full-page-spinner">
+  <mat-spinner diameter="50"></mat-spinner>
+  <p>{{ 'common.loading_data' | translate }}</p>
+</div>
+
+<mat-card class="m-t-24" *ngIf="!isLoading || formPaso1Dispositivo.dirty">
+  <mat-card-content>
+    <mat-stepper [linear]="false" #stepper (selectionChange)="selectionChanged($event)" [selectedIndex]="currentStep">
+      <mat-step [stepControl]="formPaso1Dispositivo">
+        <ng-template matStepLabel>{{ 'admin.dispositivos.form.paso1_titulo' | translate }}</ng-template>
+        <form [formGroup]="formPaso1Dispositivo" class="m-t-16">
+          <div fxLayout="row wrap" fxLayoutGap="16px grid">
+            <mat-form-field fxFlex="100" fxFlex.gt-sm="50">
+              <mat-label>{{ 'admin.dispositivos.form.nombre' | translate }}</mat-label>
+              <input matInput formControlName="nombre" required>
+              <mat-error *ngIf="formPaso1Dispositivo.get('nombre')?.hasError('required')">
+                {{ 'common.validations.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="100" fxFlex.gt-sm="50">
+              <mat-label>{{ 'admin.dispositivos.form.codigo' | translate }}</mat-label>
+              <input matInput formControlName="codigo" required>
+              <mat-error *ngIf="formPaso1Dispositivo.get('codigo')?.hasError('required')">
+                {{ 'common.validations.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="100">
+              <mat-label>{{ 'admin.dispositivos.form.descripcion' | translate }}</mat-label>
+              <textarea matInput formControlName="descripcion" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="stepper-buttons m-t-24">
+            <button mat-stroked-button color="primary" (click)="volverAListaDispositivos()">{{ 'common.cancel' | translate }}</button>
+            <button mat-raised-button matStepperNext color="primary" class="m-l-8">{{ 'common.next' | translate }}</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="formPaso2Imagen" label="{{ 'admin.dispositivos.form.paso2_titulo' | translate }}">
+        <form [formGroup]="formPaso2Imagen" class="m-t-16">
+          <p class="mat-body-1">{{ 'admin.dispositivos.form.paso2_instrucciones' | translate }}</p>
+
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileUpload class="d-none">
+          <button mat-stroked-button type="button" (click)="fileUpload.click()">
+            <mat-icon>upload_file</mat-icon>
+            {{ 'admin.dispositivos.form.btn_seleccionar_imagen' | translate }}
+          </button>
+
+          <div *ngIf="previewImageUrl" class="image-preview m-t-16">
+            <img [src]="previewImageUrl" alt="{{ 'admin.dispositivos.form.alt_preview_imagen' | translate }}">
+          </div>
+          <div *ngIf="!previewImageUrl && isEditMode && dispositivo?.imagenUrl" class="image-preview m-t-16">
+             <img [src]="dispositivo?.imagenUrl" alt="{{ 'admin.dispositivos.form.alt_imagen_actual' | translate }}">
+          </div>
+
+          <div class="stepper-buttons m-t-24">
+            <button mat-button matStepperPrevious>{{ 'common.previous' | translate }}</button>
+            <button mat-raised-button matStepperNext color="primary" class="m-l-8">{{ 'common.next' | translate }}</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step label="{{ 'admin.dispositivos.form.paso3_titulo' | translate }}">
+        <div class="m-t-16">
+          <div class="d-flex justify-content-between align-items-center m-b-16">
+            <h3 class="mat-h3 m-0">{{ 'admin.dispositivos.form.paso3_subtitulo_sensores' | translate }}</h3>
+            <button mat-raised-button color="accent" (click)="abrirDialogoSensor()">
+              <mat-icon>add_circle_outline</mat-icon>
+              {{ 'admin.sensores.btn_nuevo_sensor' | translate }}
+            </button>
+          </div>
+
+          <mtx-grid
+            [data]="sensoresDelDispositivo"
+            [columns]="sensoresColumns"
+            [rowHover]="true"
+            [rowStriped]="true"
+            [noResultText]="'admin.sensores.no_results_para_dispositivo' | translate"
+            [showPaginator]="sensoresDelDispositivo.length > 5"
+            [pageSizeOptions]="[5, 10]"
+            [pageIndex]="0"
+            [pageSize]="5">
+          </mtx-grid>
+
+          <div class="stepper-buttons m-t-24">
+            <button mat-button matStepperPrevious>{{ 'common.previous' | translate }}</button>
+            <button mat-raised-button color="primary" (click)="guardarDispositivo()" class="m-l-8" [disabled]="isLoading">
+              <mat-icon *ngIf="!isLoading">save</mat-icon>
+              <mat-progress-spinner *ngIf="isLoading" diameter="20" mode="indeterminate" class="m-r-8"></mat-progress-spinner>
+              {{ (isEditMode ? 'common.save_changes' : 'common.create') | translate }}
+            </button>
+          </div>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </mat-card-content>
+</mat-card>

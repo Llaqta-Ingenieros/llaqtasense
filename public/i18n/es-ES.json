@@ -100,6 +100,60 @@
     "range_page_label_1": "sin registros",
     "range_page_label_2": "{{startIndex}} - {{endIndex}} de {{length}}"
   },
+    "admin": {
+      "minas": {
+        "titulo_lista": "Gestión de Minas",
+        "subtitulo_lista": "Administra las unidades mineras de la organización.",
+        "btn_nueva_mina": "Nueva Mina",
+        "nombre": "Nombre",
+        "ubicacion": "Ubicación",
+        "descripcion": "Descripción",
+        "tooltip_ver_zonas": "Ver Zonas",
+        "tooltip_editar": "Editar Mina",
+        "tooltip_eliminar": "Eliminar Mina"
+      },
+      "zonas": {
+        "titulo_lista": "Zonas de la Mina: {{minaNombre}}",
+        "subtitulo_lista": "Gestiona las zonas dentro de la mina seleccionada.",
+        "btn_nueva_zona": "Nueva Zona",
+        "nombre": "Nombre de Zona",
+        "descripcion": "Descripción",
+        "tooltip_ver_campanas": "Ver Campañas",
+        "tooltip_editar": "Editar Zona",
+        "tooltip_eliminar": "Eliminar Zona",
+        "no_results_para_mina": "No se encontraron zonas para la mina {{minaNombre}}."
+      },
+      "form": {
+        "titulo_nuevo": "Nuevo Dispositivo",
+        "titulo_editar": "Editar Dispositivo: {{nombreDispositivo}}",
+        "subtitulo": "Para la Campaña: {{nombreCampana}}",
+        "paso1_titulo": "Información del Dispositivo",
+        "nombre": "Nombre del Dispositivo",
+        "codigo": "Código Único",
+        "descripcion": "Descripción (Opcional)",
+        "paso2_titulo": "Imagen de Ubicación de Sensores",
+        "paso2_instrucciones": "Sube una imagen o croquis donde se visualice la ubicación de los sensores en este dispositivo.",
+        "btn_seleccionar_imagen": "Seleccionar Imagen",
+        "alt_preview_imagen": "Previsualización de imagen",
+        "alt_imagen_actual": "Imagen actual del dispositivo",
+        "paso3_titulo": "Gestión de Sensores",
+        "paso3_subtitulo_sensores": "Sensores Asociados",
+        "btn_nuevo_sensor": "Añadir Sensor"
+      },
+      "sensores": {
+        "nombre": "Nombre del Sensor",
+        "coordenadas": "Coordenadas (ej. X,Y)",
+        "magnitud": "Magnitud Pred.",
+        "tooltip_editar": "Editar Sensor",
+        "tooltip_eliminar": "Eliminar Sensor de este Dispositivo",
+        "btn_nuevo_sensor": "Nuevo Sensor",
+        "no_results_para_dispositivo": "Este dispositivo aún no tiene sensores asignados."
+      }
+    },
+    "common": {
+      "actions": "Acciones",
+      "no_results": "No se encontraron resultados."
+    },
   "en_us": "Inglés",
   "zh_cn": "Chino simplificado",
   "zh_tw": "Chino tradicional",

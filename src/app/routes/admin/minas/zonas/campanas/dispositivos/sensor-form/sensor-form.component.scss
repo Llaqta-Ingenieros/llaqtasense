@@ -1,0 +1,8 @@
+.sensor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; // Espacio entre form-fields
+}
+.w-full { // Para que los form-fields ocupen todo el ancho
+  width: 100%;
+}
