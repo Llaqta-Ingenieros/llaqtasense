@@ -121,7 +121,17 @@
         "tooltip_ver_campanas": "Ver Campañas",
         "tooltip_editar": "Editar Zona",
         "tooltip_eliminar": "Eliminar Zona",
-        "no_results_para_mina": "No se encontraron zonas para la mina {{minaNombre}}."
+        "no_results_para_mina": "No se encontraron zonas para la mina {{minaNombre}}.",
+        "list_title_for_mina": "Zonas de la Mina: {{nombreMina}}",
+        "list_subtitle_for_mina": "Gestiona las diferentes zonas dentro de la mina seleccionada.",
+        "list_title_mina_not_found": "Mina no encontrada",
+        "btn_nueva_zona": "Nueva Zona",
+        "nombre": "Nombre de Zona",
+        "descripcion": "Descripción",
+        "tooltip_ver_campanas": "Ver Campañas",
+        "tooltip_editar": "Editar Zona",
+        "tooltip_eliminar": "Eliminar Zona",
+        "no_results_for_mina": "No se encontraron zonas para la mina {{nombreMina}}."
       },
       "form": {
         "titulo_nuevo": "Nuevo Dispositivo",
@@ -138,7 +148,17 @@
         "alt_imagen_actual": "Imagen actual del dispositivo",
         "paso3_titulo": "Gestión de Sensores",
         "paso3_subtitulo_sensores": "Sensores Asociados",
-        "btn_nuevo_sensor": "Añadir Sensor"
+        "btn_nuevo_sensor": "Añadir Sensor",
+        "new_title_header": "Nueva Mina",
+        "new_subtitle_header": "Complete los datos para registrar una nueva unidad minera.",
+        "edit_title_header": "Editar Mina: {{nombreMina}}",
+        "edit_subtitle_header": "Modifique los datos de la unidad minera.",
+        "nombre": "Nombre de la Mina",
+        "ubicacion": "Ubicación Geográfica",
+        "descripcion": "Descripción (Opcional)",
+        "not_found_error": "La mina solicitada no fue encontrada.",
+        "update_success": "Mina actualizada con éxito.",
+        "create_success": "Mina creada con éxito."
       },
       "sensores": {
         "nombre": "Nombre del Sensor",

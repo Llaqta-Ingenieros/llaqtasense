@@ -1,1 +1,43 @@
-<p>zonas-list works!</p>
+<page-header
+  [title]="pageTitle"
+  [subtitle]="pageSubtitle"
+  [hasBack]="true"
+  (backClick)="volverAListaMinas()">
+  <button mat-raised-button color="primary" (click)="nuevaZona()" *ngIf="mina">
+    <mat-icon>add_location_alt</mat-icon> {{ 'admin.zonas.btn_nueva_zona' | translate }}
+  </button>
+</page-header>
+
+<div class="m-t-24">
+  <div *ngIf="isLoading" class="loading-shade full-page-spinner">
+    <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+    <p>{{ 'common.loading_data' | translate }}</p>
+  </div>
+
+  <div *ngIf="!isLoading && !mina" class="m-t-24">
+    <mat-card>
+      <mat-card-content>
+        <p>{{ 'admin.minas.form.not_found_error' | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card *ngIf="!isLoading && mina">
+    <mat-card-content>
+      <mtx-grid
+        [data]="zonasDeLaMina"
+        [columns]="columns"
+        [loading]="isLoading"
+        [rowHover]="true"
+        [rowStriped]="true"
+        [columnResizable]="true"
+        [noResultText]="'admin.zonas.no_results_for_mina' | translate: {nombreMina: mina?.nombre || ''}"
+        [pageOnFront]="true"
+        [showPaginator]="zonasDeLaMina.length > 10"
+        [pageSizeOptions]="[10, 20, 50]"
+        [pageIndex]="0"
+        [pageSize]="10">
+      </mtx-grid>
+    </mat-card-content>
+  </mat-card>
+</div>

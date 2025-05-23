@@ -11,7 +11,9 @@ import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared/components/page-header/page-header.component';
 
+import { ToastrService } from 'ngx-toastr';
 import { Mina, MOCK_MINAS } from '../admin.interface'; // Asegúrate que la ruta es correcta
+import { MinaFormComponent } from '../minas/mina-form/mina-form.component';
 // Importa tu MinaFormComponent si lo vas a usar en un diálogo
 // import { MinaFormComponent } from '../minas/mina-form/mina-form.component';
 
@@ -37,6 +39,8 @@ export class AdminDashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly translate = inject(TranslateService);
+  private readonly toast = inject(ToastrService);
+
 
   minas: Mina[] = [];
   isLoading = true;
@@ -91,21 +95,21 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   nuevaMina() {
-    // const dialogRef = this.dialog.open(MinaFormComponent, { // Asumiendo que tienes MinaFormComponent
-    //   width: '600px',
-    //   // data: { /* opcional: pasar datos al diálogo */ }
-    // });
+    const dialogRef = this.dialog.open(MinaFormComponent, { // Asumiendo que tienes MinaFormComponent
+      width: '600px',
+      // data: { /* opcional: pasar datos al diálogo */ }
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     // Lógica para añadir la nueva mina y recargar
-    //     console.log('Nueva mina creada/guardada:', result);
-    //     this.cargarMinas();
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Lógica para añadir la nueva mina y recargar
+        console.log('Nueva mina creada/guardada:', result);
+        this.cargarMinas();
+      }
+    });
     console.log('Abrir diálogo para nueva mina');
     // Por ahora, navega a un formulario si no usas diálogo o créalo
-    // this.router.navigate(['/admin/minas/nueva']);
+    this.router.navigate(['/admin/minas/nueva']);
   }
 
   verZonas(mina: Mina) {
@@ -113,26 +117,26 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   editarMina(mina: Mina) {
-  // const dialogRef = this.dialog.open(MinaFormComponent, {
-  //   width: '600px',
-  //   data: { minaToEdit: mina } // Pasar la mina a editar
-  // });
+    const dialogRef = this.dialog.open(MinaFormComponent, {
+      width: '600px',
+      data: { minaToEdit: mina } // Pasar la mina a editar
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     console.log('Mina editada/guardada:', result);
-    //     this.cargarMinas();
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Mina editada/guardada:', result);
+        this.cargarMinas();
+      }
+    });
     console.log('Editar mina:', mina);
-    // this.router.navigate(['/admin/minas/editar', mina.id]);
+    this.router.navigate(['/admin/minas/editar', mina.id]);
   }
 
   eliminarMina(mina: Mina) {
     // Aquí iría la lógica de confirmación y eliminación
     console.log('Eliminar mina:', mina);
     // Simulación:
-    // this.minas = this.minas.filter(m => m.id !== mina.id);
-    // this.showToast('Mina eliminada'); // Usarías tu servicio de notificaciones
+    this.minas = this.minas.filter(m => m.id !== mina.id);
+    this.toast.success(this.translate.instant('admin.minas.mina_eliminada', { nombre: mina.nombre }), this.translate.instant('admin.minas.eliminar_mina'));
   }
 }
