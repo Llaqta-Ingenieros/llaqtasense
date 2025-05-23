@@ -2,36 +2,47 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpRequest
+  HttpRequest,
+  HttpResponse
 } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { environment } from '@env/environment';
 import { ToastrService } from 'ngx-toastr';
-import { mergeMap, of } from 'rxjs';
+import { mergeMap, of, throwError } from 'rxjs';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
   private readonly toast = inject(ToastrService);
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (!req.url.includes('/api/')) {
-      return next.handle(req);
+    // if (!req.url.includes('/api/')) {
+    //   return next.handle(req);
+    // }
+    if (environment.apimConfig.useSubscriptionKey && environment.apimConfig.subscriptionKey && req.url.startsWith(environment.apimConfig.apiUrl)) {
+      const clonedRequest = req.clone({
+        setHeaders: {
+          [environment.apimConfig.subscriptionKeyHeader]: environment.apimConfig.subscriptionKey
+        }
+      });
+      console.log('ApiKeyInterceptor: Adding subscription key to headers for URL:', req.url);
+      return next.handle(clonedRequest);
     }
 
     return next.handle(req).pipe(mergeMap((event: HttpEvent<any>) => this.handleOkReq(event)));
   }
 
   private handleOkReq(event: HttpEvent<any>) {
-    // if (event instanceof HttpResponse) {
-    //   const body: any = event.body;
-    //   // failure: { code: **, msg: 'failure' }
-    //   // success: { code: 0,  msg: 'success', data: {} }
-    //   if (body && 'code' in body && body.code !== 0) {
-    //     if (body.msg) {
-    //       this.toast.error(body.msg);
-    //     }
-    //     return throwError(() => []);
-    //   }
-    // }
+    if (event instanceof HttpResponse) {
+      const body: any = event.body;
+      //  failure: { code: **, msg: 'failure' }
+      //  success: { code: 0,  msg: 'success', data: {} }
+      if (body && 'code' in body && body.code !== 0) {
+        if (body.msg) {
+          this.toast.error(body.msg);
+        }
+        return throwError(() => []);
+      }
+    }
     // Pass down event if everything is OK
     return of(event);
   }

@@ -8,6 +8,8 @@ import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 import { BrandingComponent } from '../widgets/branding.component';
 import { UserPanelComponent } from './user-panel.component';
 
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -15,6 +17,7 @@ import { UserPanelComponent } from './user-panel.component';
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
+    RouterLink,
     MatSlideToggleModule,
     MatIconModule,
     MatButtonModule,

@@ -12,12 +12,14 @@ export const environment = {
     },
   },
   apiConfig: {
-    uri: 'https://graph.microsoft.com/v1.0/me',
-    scopes: [
-      'openid',
-      'offline_access',
-      // puedes incluir este si tu API está lista:
-      // 'https://llaqtab2c.onmicrosoft.com/llaqtasense-api/data.read',
-    ],
+    apiUrl: 'http://api-ne-llaqta.azurewebsites.net', // O la URL de tu APIM Gateway cuando esté lista
+    useSubscriptionKey: true, // Flag para pruebas
+    subscriptionKey: '5e4b845b-7965-48ba-88be-6be0d93373c8', // Tu clave temporal de la URL
+    // O si ya tienes una clave de APIM para pruebas:
+    // apiUrl: 'https://tu-apim-instance.azure-api.net/llaqta-notifications',
+    // subscriptionKey: 'TU_CLAVE_DE_SUSCRIPCION_DE_APIM',
+    subscriptionKeyHeader: 'Ocp-Apim-Subscription-Key' // Para APIM
+    // O si es una clave personalizada en tu API Java:
+    // subscriptionKeyHeader: 'X-API-Key'
   },
 };

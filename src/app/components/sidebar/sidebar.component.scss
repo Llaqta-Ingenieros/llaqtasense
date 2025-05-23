@@ -19,6 +19,9 @@
   padding: 0 0.5rem 0.5rem;
   overflow: auto;
   scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - var(--mat-toolbar-standard-height));
 
   @include breakpoints.bp-lt(small) {
     & {
@@ -26,3 +29,16 @@
     }
   }
 }
+
+app-sidemenu {
+  flex-grow: 1; // Hace que el sidemenu ocupe el espacio disponible
+  overflow-y: auto; // Permite scroll en el sidemenu si es necesario
+}
+
+.admin-button-container {
+  margin-top: auto; // Empuja el botón hacia abajo si el sidebar tiene espacio
+  padding-top: 16px; // Espacio arriba
+  padding-bottom: 16px; // Espacio abajo
+  //border-top: 1px solid var(--mat-divider-color); // Línea divisoria opcional
+}
+

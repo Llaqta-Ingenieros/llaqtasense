@@ -23,6 +23,13 @@ export const environment = {
       // 'https://graph.microsoft.com/User.Read'
       //'https://llaqtab2c.onmicrosoft.com/llaqtasense-api/data.read',
     ],
+  },
+  apimConfig: {
+    production: true,
+    apiUrl: 'https://tu-apim-instance.azure-api.net/llaqta-notifications', // URL de producción de APIM
+    useSubscriptionKey: true, // En producción, usualmente APIM siempre requerirá la clave
+    subscriptionKey: 'CLAVE_DE_SUSCRIPCION_DE_PRODUCCION_DE_APIM',
+    subscriptionKeyHeader: 'Ocp-Apim-Subscription-Key'
   }
 };
 

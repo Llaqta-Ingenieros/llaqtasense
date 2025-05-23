@@ -21,4 +21,12 @@
     <app-user-panel />
   }
   <app-sidemenu [ripple]="showToggle" />
+
+  <!-- <div *ngxPermissionsOnly="['ADMIN']" class="admin-button-container" style="padding: 8px 16px; text-align: center;"></div> -->
+  <div class="admin-button-container" style="padding: 8px 16px; text-align: center;">
+    <button mat-stroked-button color="primary" class="w-full" routerLink="/admin">
+      <mat-icon>manage_accounts</mat-icon>
+      <span>{{ 'Configuración' }}</span>
+    </button>
+  </div>
 </div>
